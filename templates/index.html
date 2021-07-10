@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Todo App</title>
+</head>
+
+<body>
+    <div style="margin-top: 100px;" class="container">
+        <h3>Todo List</h3>
+        <hr>
+        <form action="addTodo" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Todo Başlık</label>
+                <input type="text" name="title" class="form-control" id="exampleInputEmail1" aria-describedby="todoHelp"
+                    placeholder="Todo başlık giriniz..">
+            </div>
+            <div class="d-grid gap-1">
+                <button class="btn btn-primary" type="submit">Ekle</button>
+              </div>
+        </form>
+        <hr>
+        {% if todos %}
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Başlık</th>
+                    <th scope="col">Tamamlandı Mı?</th>
+                    <th scope="col">Güncelle</th>
+                    <th scope="col">Sil</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in todos %}
+                <tr>
+                    <th scope="row">{{todo.id}}</th>
+                    <td>{{todo.title}}</td>
+                    {% if todo.completed %}
+                    <td>Tamamlandı</td>
+                    {% else %}
+                    <td>Tamamlanmadı</td>
+                    {% endif %}
+                    <td><a href="/update/{{todo.id}}" class="btn btn-success">Güncelle</a></td>
+                    <td><a href="/delete/{{todo.id}}" class="btn btn-danger">Sil</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-danger">
+            Herhangi bir todo bulunamadı.
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

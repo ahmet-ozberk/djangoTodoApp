@@ -1,0 +1,4 @@
+python manage.py migrate komutu ile veritabanı bağlantısını yapıyoruz
+python manage.py createsuperuser komutu ile super kullanıcı yani hard admin oluştuyoruz ki, sisteme girebilelim.
+python manage.py makemigrations sql sorgularını hazırlar
+python manage.py migrate tekrar çalıştırılır
