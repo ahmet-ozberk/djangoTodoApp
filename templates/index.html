@@ -10,7 +10,6 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Todo App</title>
 </head>
-
 <body>
     <div style="margin-top: 100px;" class="container">
         <h3>Todo List</h3>
@@ -19,52 +18,56 @@
             {% csrf_token %}
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Todo Başlık</label>
-                <input type="text" name="title" class="form-control" id="exampleInputEmail1" aria-describedby="todoHelp"
+                <input type="text" name="title" class="form-control" style="border-radius: 20px;" id="exampleInputEmail1" aria-describedby="todoHelp"
                     placeholder="Todo başlık giriniz..">
             </div>
             <div class="d-grid gap-1">
-                <button class="btn btn-primary" type="submit">Ekle</button>
-              </div>
+                <button class="btn btn-primary" style="border-radius: 20px;" type="submit">Ekle</button>
+            </div>
         </form>
         <hr>
         {% if todos %}
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Başlık</th>
-                    <th scope="col">Tamamlandı Mı?</th>
-                    <th scope="col">Güncelle</th>
-                    <th scope="col">Sil</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for todo in todos %}
-                <tr>
-                    <th scope="row">{{todo.id}}</th>
-                    <td>{{todo.title}}</td>
-                    {% if todo.completed %}
-                    <td>Tamamlandı</td>
-                    {% else %}
-                    <td>Tamamlanmadı</td>
-                    {% endif %}
-                    <td><a href="/update/{{todo.id}}" class="btn btn-success">Güncelle</a></td>
-                    <td><a href="/delete/{{todo.id}}" class="btn btn-danger">Sil</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <div class="alert alert-danger">
-            Herhangi bir todo bulunamadı.
+        {% for todo in todos %}
+        {% if todo.completed %}
+        <div class="card text-center bg-info text-dark"
+            style="margin-bottom: 10px;border-radius: 20px;font-weight: 800;">
+            {% else %}
+            <div class="card text-center bg-light text-dark" style="margin-bottom: 10px;border-radius: 20px;background-color:tan;">
+                {% endif %}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title" style="text-align: start; color:black; font-weight: 300;">{{todo.id}}
+                            </h5>
+                        </div>
+                        <div class="col-6">
+                            <h5 class="card-title" style="text-align: center;">{{todo.title}}</h5>
+                        </div>
+                        <div class="col">
+                            {% if todo.completed %}
+                            <h5 class="card-title" style="color: green;text-align: end;">Tamamlandı</h5>
+                            {% else %}
+                            <h5 class="card-title" style="color: red;text-align: end;">Tamamlanmadı</h5>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <p class="card-text" style="font-weight: 500;text-align: center;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit voluptatibus laboriosam consequatur quam inventore saepe ullam deleniti, eveniet delectus exercitationem commodi deserunt et dolores neque perspiciatis. Velit esse minus repudiandae.</p>
+                    <a href="/update/{{todo.id}}" style="border-radius: 20px;" class="btn btn-success">Güncelle</a>
+                    <a href="/delete/{{todo.id}}" style="border-radius: 20px;" class="btn btn-danger">Sil</a>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="alert alert-danger">
+                Herhangi bir todo bulunamadı.
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
-    </div>
 
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>

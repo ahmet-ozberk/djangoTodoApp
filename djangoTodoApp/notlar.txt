@@ -2,3 +2,36 @@ python manage.py migrate komutu ile veritabanı bağlantısını yapıyoruz
 python manage.py createsuperuser komutu ile super kullanıcı yani hard admin oluştuyoruz ki, sisteme girebilelim.
 python manage.py makemigrations sql sorgularını hazırlar
 python manage.py migrate tekrar çalıştırılır
+html sayfasıdaki yapı
+ {% if todos %}
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Başlık</th>
+                    <th scope="col">Tamamlandı Mı?</th>
+                    <th scope="col">Güncelle</th>
+                    <th scope="col">Sil</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in todos %}
+                <tr>
+                    <th scope="row">{{todo.id}}</th>
+                    <td>{{todo.title}}</td>
+                    {% if todo.completed %}
+                    <td>Tamamlandı</td>
+                    {% else %}
+                    <td>Tamamlanmadı</td>
+                    {% endif %}
+                    <td><a href="/update/{{todo.id}}" class="btn btn-success">Güncelle</a></td>
+                    <td><a href="/delete/{{todo.id}}" class="btn btn-danger">Sil</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-danger">
+            Herhangi bir todo bulunamadı.
+        </div>
+        {% endif %}
